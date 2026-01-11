@@ -14,16 +14,34 @@ const AIDemo: React.FC = () => {
     if (!audio) return;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
+    const updateDuration = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
     const handleEnded = () => setIsPlaying(false);
+    const handleCanPlay = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
 
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('canplay', handleCanPlay);
+    audio.addEventListener('durationchange', updateDuration);
     audio.addEventListener('ended', handleEnded);
+
+    // Try to get duration immediately if already loaded
+    if (audio.duration && !isNaN(audio.duration)) {
+      setDuration(audio.duration);
+    }
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('canplay', handleCanPlay);
+      audio.removeEventListener('durationchange', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
   }, []);
@@ -117,7 +135,8 @@ const AIDemo: React.FC = () => {
                   <div className="flex items-end justify-center gap-1 w-full h-16">
                     {[...Array(40)].map((_, i) => {
                       const height = Math.sin(i * 0.5) * 30 + 30;
-                      const isActive = isPlaying && (currentTime / duration) * 40 > i;
+                      const progress = duration > 0 ? (currentTime / duration) * 40 : 0;
+                      const isActive = isPlaying && progress > i;
                       return (
                         <div
                           key={i}
