@@ -51,7 +51,9 @@ const Pricing: React.FC = () => {
               </div>
 
               <a
-                href="#contact"
+                href="https://api.leadconnectorhq.com/widget/booking/0usmFWdqKxXZlzCtSL91"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#050b1a] ${
                   plan.recommended
                   ? 'bg-indigo-600 text-white hover:bg-indigo-700'
