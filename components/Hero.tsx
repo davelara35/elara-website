@@ -58,14 +58,20 @@ const Hero: React.FC = () => {
                     <div className="text-xs text-gray-500 uppercase tracking-widest mt-1 font-semibold">Total Calls Handled</div>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="h-32 rounded-xl glass border border-white/5 p-4 flex flex-col justify-between">
-                    <span className="text-xs text-gray-500">Appointments Booked</span>
-                    <span className="text-2xl font-bold text-green-400">342</span>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="h-28 rounded-xl glass border border-white/5 p-5 flex flex-col justify-center gap-1">
+                      <span className="text-xs text-gray-500">Appointments Booked</span>
+                      <span className="text-2xl font-bold text-green-400">342</span>
+                    </div>
+                    <div className="h-28 rounded-xl glass border border-white/5 p-5 flex flex-col justify-center gap-1">
+                      <span className="text-xs text-gray-500">Patient ROI</span>
+                      <span className="text-2xl font-bold text-blue-400">12.4x</span>
+                    </div>
                   </div>
-                  <div className="h-32 rounded-xl glass border border-white/5 p-4 flex flex-col justify-between">
-                    <span className="text-xs text-gray-500">Patient ROI</span>
-                    <span className="text-2xl font-bold text-blue-400">12.4x</span>
+                  <div className="h-28 rounded-xl glass border border-white/5 p-5 flex flex-col justify-center gap-1">
+                    <span className="text-xs text-gray-500">Revenue Generated</span>
+                    <span className="text-2xl font-bold text-purple-400">$86.2K</span>
                   </div>
                 </div>
               </div>
