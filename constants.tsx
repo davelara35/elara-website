@@ -5,7 +5,7 @@ import { Phone, Calendar, Settings, ShieldCheck, BarChart3, Zap } from 'lucide-r
 
 export const PRICING_PLANS: PricingPlan[] = [
   {
-    name: 'Starter',
+    name: 'Basic',
     price: 299,
     minutes: 2000,
     overage: 0.20,
@@ -18,7 +18,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     ]
   },
   {
-    name: 'Standard',
+    name: 'Growth',
     price: 499,
     minutes: 4000,
     overage: 0.20,
