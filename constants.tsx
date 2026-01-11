@@ -33,7 +33,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     ]
   },
   {
-    name: 'Growth',
+    name: 'Premium',
     price: 699,
     minutes: 7000,
     overage: 0.12,
