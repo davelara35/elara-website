@@ -1,47 +1,71 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, Send, Bot, User, Sparkles, Calendar } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import { Play, Pause, Volume2, Sparkles } from 'lucide-react';
 
 const AIDemo: React.FC = () => {
-  const [messages, setMessages] = useState<{role: 'ai' | 'user', text: string}[]>([
-    { role: 'ai', text: "Hello! I'm Elara. How can I assist your practice today?" }
-  ]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.75);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+    const handleEnded = () => setIsPlaying(false);
+
+    audio.addEventListener('timeupdate', updateTime);
+    audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime);
+      audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('ended', handleEnded);
+    };
+  }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume;
     }
-  }, [messages, isTyping]);
+  }, [volume]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
 
-    const userText = input;
-    setInput("");
-    setMessages(prev => [...prev, { role: 'user', text: userText }]);
-    setIsTyping(true);
-
-    try {
-      // Initialize AI right before use as per guidelines
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `You are Elara, a friendly medical AI receptionist. A user says: "${userText}". Provide a very short, professional reply as a voice assistant.`,
-      });
-      
-      setMessages(prev => [...prev, { role: 'ai', text: response.text || "I'm here to help manage your calls efficiently." }]);
-    } catch (e) {
-      // Fallback if API key is not ready or fails
-      setTimeout(() => {
-        setMessages(prev => [...prev, { role: 'ai', text: "That sounds like a great use case. I can handle scheduling, patient inquiries, and follow-ups with ease." }]);
-      }, 1000);
-    } finally {
-      setIsTyping(false);
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
     }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const newTime = parseFloat(e.target.value);
+    audio.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+  };
+
+  const formatTime = (time: number) => {
+    if (isNaN(time)) return '0:00';
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -50,7 +74,7 @@ const AIDemo: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Experience the <span className="text-indigo-400">Natural</span> <br /> 
+              Experience the <span className="text-indigo-400">Natural</span> <br />
               Conversation Flow
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed">
@@ -74,68 +98,86 @@ const AIDemo: React.FC = () => {
           </div>
 
           <div className="relative">
-            <div className="glass border rounded-3xl overflow-hidden shadow-2xl h-[450px] flex flex-col">
-              <div className="bg-white/5 border-b border-white/10 p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-600/20">
-                    <Bot className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">Elara Medical AI</div>
-                    <div className="text-[10px] text-green-400 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                      Listening...
-                    </div>
+            <div className="glass border rounded-3xl overflow-hidden shadow-2xl p-8 md:p-12">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-4">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                  </span>
+                  Live Demo Recording
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Elara in Action</h3>
+                <p className="text-gray-400 text-sm">Listen to a real conversation with our AI</p>
+              </div>
+
+              <div className="space-y-6">
+                {/* Waveform Visualization */}
+                <div className="h-32 rounded-2xl bg-gradient-to-br from-indigo-500/10 to-blue-500/5 border border-indigo-500/20 flex items-center justify-center px-8">
+                  <div className="flex items-end justify-center gap-1 w-full h-16">
+                    {[...Array(40)].map((_, i) => {
+                      const height = Math.sin(i * 0.5) * 30 + 30;
+                      const isActive = isPlaying && (currentTime / duration) * 40 > i;
+                      return (
+                        <div
+                          key={i}
+                          className={`flex-1 rounded-full transition-all duration-300 ${
+                            isActive ? 'bg-indigo-400' : 'bg-gray-600'
+                          }`}
+                          style={{
+                            height: `${height}%`,
+                            opacity: isActive ? 1 : 0.3,
+                          }}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
-              </div>
 
-              <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-hide">
-                {messages.map((m, i) => (
-                  <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${
-                      m.role === 'user' 
-                      ? 'bg-indigo-600 text-white rounded-tr-none' 
-                      : 'bg-white/5 border border-white/10 text-gray-200 rounded-tl-none'
-                    }`}>
-                      {m.text}
-                    </div>
-                  </div>
-                ))}
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-none">
-                      <div className="flex gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce"></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce [animation-delay:0.2s]"></span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-gray-500 animate-bounce [animation-delay:0.4s]"></span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="p-4 bg-white/5 border-t border-white/10">
-                <div className="relative flex items-center gap-2">
-                  <input 
-                    type="text" 
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Try asking about an appointment..."
-                    className="flex-1 bg-black/40 border border-white/10 rounded-full py-3 px-6 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
+                {/* Progress Bar */}
+                <div className="space-y-2">
+                  <input
+                    type="range"
+                    min="0"
+                    max={duration || 0}
+                    value={currentTime}
+                    onChange={handleSeek}
+                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-indigo-500 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
                   />
-                  <button 
-                    onClick={handleSend}
-                    className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700 transition-colors"
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>{formatTime(currentTime)}</span>
+                    <span>{formatTime(duration)}</span>
+                  </div>
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center justify-center gap-4">
+                  <button
+                    onClick={togglePlay}
+                    className="w-16 h-16 rounded-full bg-indigo-600 flex items-center justify-center hover:bg-indigo-700 transition-all hover:scale-105 shadow-lg shadow-indigo-600/30"
                   >
-                    <Send className="w-4 h-4" />
+                    {isPlaying ? (
+                      <Pause className="w-7 h-7 text-white fill-white" />
+                    ) : (
+                      <Play className="w-7 h-7 text-white fill-white ml-1" />
+                    )}
                   </button>
-                  <button className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors group">
-                    <Mic className="w-4 h-4 group-hover:text-indigo-400 transition-colors" />
-                  </button>
+                  <div className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10">
+                    <Volume2 className="w-4 h-4 text-gray-400" />
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.01"
+                      value={volume}
+                      onChange={handleVolumeChange}
+                      className="w-20 h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-indigo-500 [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+                    />
+                  </div>
                 </div>
               </div>
+
+              <audio ref={audioRef} src="/demo-audio.mp3" preload="metadata" />
             </div>
           </div>
         </div>
