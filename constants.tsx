@@ -18,7 +18,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     ]
   },
   {
-    name: 'Growth',
+    name: 'Pro',
     price: 499,
     minutes: 4000,
     overage: 0.20,
