@@ -75,7 +75,9 @@ const Pricing: React.FC = () => {
             <p className="text-gray-400">Specialized pricing and white-glove deployment for large organizations.</p>
           </div>
           <a
-            href="#contact"
+            href="https://api.leadconnectorhq.com/widget/booking/Pn8X4pl7wr9mMibar01L"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-8 py-4 rounded-xl glass border-white/10 font-bold hover:bg-white/10 transition-colors whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#050b1a]"
           >
             Talk to Enterprise Team
