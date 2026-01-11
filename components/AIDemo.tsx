@@ -137,19 +137,6 @@ const AIDemo: React.FC = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Visual Flair: Floating Cards */}
-            <div className="absolute -bottom-6 -right-6 glass p-4 rounded-xl border border-white/10 hidden md:block animate-bounce-slow">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                  <Calendar className="w-4 h-4 text-green-400" />
-                </div>
-                <div>
-                  <div className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">New Booking</div>
-                  <div className="text-sm font-semibold">Dr. Smith • 2:30 PM</div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
