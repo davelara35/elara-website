@@ -1,0 +1,7 @@
+{
+  "name": "Elara - Voice AI for Healthcare",
+  "description": "A modern, futuristic landing page for Elara, featuring specialized AI receptionist services for healthcare practices with real-time demo capabilities.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
