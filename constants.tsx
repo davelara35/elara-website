@@ -36,11 +36,11 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: 'Growth',
     price: 699,
     minutes: 7000,
-    overage: 0.10,
+    overage: 0.12,
     features: [
       'Enterprise Voice AI Engine',
       '7,000 Monthly Minutes',
-      'Lower Overage Rates ($0.10)',
+      'Lower Overage Rates ($0.12)',
       'Advanced Workflow Automation',
       'White-Glove Priority Implementation',
       'Multi-Site Support'
