@@ -26,7 +26,6 @@ export const PRICING_PLANS: PricingPlan[] = [
     features: [
       'Complete Voice AI Platform',
       '4,000 Monthly Minutes',
-      'Done-With-You Implementation',
       'Custom Configuration & Training',
       'PMS/Phone System Integration',
       'Real-Time Analytics Dashboard'
@@ -42,8 +41,7 @@ export const PRICING_PLANS: PricingPlan[] = [
       '7,000 Monthly Minutes',
       'Lower Overage Rates ($0.12)',
       'Advanced Workflow Automation',
-      'White-Glove Priority Implementation',
-      'Multi-Site Support'
+      'White-Glove Priority Implementation'
     ]
   }
 ];
