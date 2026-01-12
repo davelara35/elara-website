@@ -21,7 +21,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: 'Pro',
     price: 499,
     minutes: 4000,
-    overage: 0.20,
+    overage: 0.15,
     recommended: true,
     features: [
       'Complete Voice AI Platform',
