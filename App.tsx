@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 
 const AIDemo = lazy(() => import('./components/AIDemo'));
 const Features = lazy(() => import('./components/Features'));
+const ROICalculator = lazy(() => import('./components/ROICalculator'));
 const Pricing = lazy(() => import('./components/Pricing'));
 const FAQ = lazy(() => import('./components/FAQ'));
 const Contact = lazy(() => import('./components/Contact'));
@@ -73,6 +74,7 @@ const App: React.FC = () => {
         <Suspense fallback={<LoadingFallback />}>
           <AIDemo />
           <Features />
+          <ROICalculator />
           <Pricing />
           <FAQ />
           <Contact />
