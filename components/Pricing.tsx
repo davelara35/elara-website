@@ -71,7 +71,7 @@ const Pricing: React.FC = () => {
         {/* DSO/Contact Banner */}
         <div className="mt-16 p-8 rounded-3xl glass border border-white/10 flex flex-col md:flex-row items-center justify-between gap-8 max-w-6xl mx-auto">
           <div>
-            <h3 className="text-2xl font-bold mb-2">DSO, GPO, or Multi-Site Location?</h3>
+            <h3 className="text-2xl font-bold mb-2">DSO, GPO, or Multi-Location Practice?</h3>
             <p className="text-gray-400">Specialized pricing and white-glove deployment for large organizations.</p>
           </div>
           <a
