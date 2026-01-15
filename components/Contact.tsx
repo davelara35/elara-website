@@ -118,7 +118,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-xs text-indigo-200 uppercase tracking-widest font-bold">Location</div>
-                    <div className="font-medium text-white">Raleigh, North Carolina</div>
+                    <div className="font-medium text-white">Nashville, Tennessee</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
