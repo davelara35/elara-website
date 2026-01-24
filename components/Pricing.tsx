@@ -59,9 +59,9 @@ const Pricing: React.FC = () => {
                   ? 'bg-indigo-600 text-white hover:bg-indigo-700'
                   : 'bg-white/10 text-white hover:bg-white/20'
                 }`}
-                aria-label={`Get started with ${plan.name} plan`}
+                aria-label={`Buy now - ${plan.name} plan`}
               >
-                Get Started
+                Buy Now
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
