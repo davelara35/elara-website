@@ -9,6 +9,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     price: 299,
     minutes: 2000,
     overage: 0.20,
+    link: 'https://link.fastpaydirect.com/payment-link/69742ebec80eaf76d487120e',
     features: [
       'Core Voice AI Engine',
       '2,000 Monthly Minutes',

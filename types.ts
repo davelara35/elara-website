@@ -8,6 +8,7 @@ export interface PricingPlan {
   overage: number;
   features: string[];
   recommended?: boolean;
+  link?: string;
 }
 
 export interface FAQItem {
