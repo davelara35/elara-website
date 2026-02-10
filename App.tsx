@@ -12,6 +12,8 @@ const FAQ = lazy(() => import('./components/FAQ'));
 const Contact = lazy(() => import('./components/Contact'));
 const Footer = lazy(() => import('./components/Footer'));
 const AboutUs = lazy(() => import('./components/AboutUs'));
+const TermsAndConditions = lazy(() => import('./components/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./components/PrivacyPolicy'));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center py-20">
@@ -71,6 +73,22 @@ const AboutPage: React.FC = () => (
   </div>
 );
 
+const TermsPage: React.FC = () => (
+  <div className="pt-32">
+    <Suspense fallback={<LoadingFallback />}>
+      <TermsAndConditions />
+    </Suspense>
+  </div>
+);
+
+const PrivacyPage: React.FC = () => (
+  <div className="pt-32">
+    <Suspense fallback={<LoadingFallback />}>
+      <PrivacyPolicy />
+    </Suspense>
+  </div>
+);
+
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -119,6 +137,8 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/terms" element={<TermsPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
       </Routes>
     </Layout>
   );
