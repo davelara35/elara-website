@@ -26,6 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
         </a>
 
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400" role="navigation">
+          <a href="#about" className="hover:text-white transition-colors focus:outline-none focus:text-white focus:underline">About</a>
           <a href="#features" className="hover:text-white transition-colors focus:outline-none focus:text-white focus:underline">Platform</a>
           <a href="#pricing" className="hover:text-white transition-colors focus:outline-none focus:text-white focus:underline">Pricing</a>
           <a href="#faq" className="hover:text-white transition-colors focus:outline-none focus:text-white focus:underline">FAQ</a>

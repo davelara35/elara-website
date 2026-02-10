@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 
 const AIDemo = lazy(() => import('./components/AIDemo'));
+const AboutUs = lazy(() => import('./components/AboutUs'));
 const Features = lazy(() => import('./components/Features'));
 const ROICalculator = lazy(() => import('./components/ROICalculator'));
 const Pricing = lazy(() => import('./components/Pricing'));
@@ -73,6 +74,7 @@ const App: React.FC = () => {
         <Hero />
         <Suspense fallback={<LoadingFallback />}>
           <AIDemo />
+          <AboutUs />
           <Features />
           <ROICalculator />
           <Pricing />
