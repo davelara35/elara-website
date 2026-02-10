@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 
@@ -18,6 +18,16 @@ const LoadingFallback = () => (
     <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
   </div>
 );
+
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 const Layout: React.FC<{ children: React.ReactNode; scrolled: boolean }> = ({ children, scrolled }) => (
   <div className="min-h-screen bg-grid selection:bg-indigo-500/30">
@@ -105,6 +115,7 @@ const App: React.FC = () => {
 
   return (
     <Layout scrolled={scrolled}>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

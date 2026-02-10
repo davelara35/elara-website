@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface NavbarProps {
   scrolled: boolean;
@@ -12,10 +13,10 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
       aria-label="Main navigation"
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <a
-          href="#"
+        <Link
+          to="/"
           className="flex items-center gap-2 group"
-          aria-label="Elara - Return to top"
+          aria-label="Elara - Return to homepage"
         >
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow">
             <span className="font-bold text-white text-xl">E</span>
@@ -23,7 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({ scrolled }) => {
           <span className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
             Elara
           </span>
-        </a>
+        </Link>
 
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400" role="navigation">
           <a href="#features" className="hover:text-white transition-colors focus:outline-none focus:text-white focus:underline">Platform</a>
