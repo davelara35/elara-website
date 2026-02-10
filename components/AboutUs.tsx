@@ -43,7 +43,7 @@ const AboutUs: React.FC = () => {
         <div className="max-w-4xl mx-auto mb-20">
           <h3 className="text-2xl md:text-3xl font-bold mb-8 text-center">Our Story</h3>
           <p className="text-gray-400 text-lg leading-relaxed text-center">
-            Elara was founded by two college friends who shared a vision—to use AI to innovate how businesses capitalize on communication.
+            Elara was founded by two friends who shared a vision—to use AI to innovate how businesses capitalize on communication.
           </p>
         </div>
 
